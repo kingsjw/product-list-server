@@ -5,12 +5,16 @@ const productDummyData = require('./dummyData.json');
 
 const productCollections = {
   products: [
-    ...productDummyData,
+    ...productDummyData.data
   ] as Product[],
 };
 
-export const getProducts = () => {
-  return productCollections.products;
+export const getProducts = (): Promise<Product[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(productCollections.products);
+    }, 1000);
+  });
 };
 
 export const getProductByID = (id: string): Product | undefined => {

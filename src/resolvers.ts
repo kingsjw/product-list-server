@@ -3,7 +3,7 @@ import { Product, ProductInput } from './models/product';
 
 export default {
   Query: {
-    products: (): Product[] => {
+    products: (): Promise<Product[]> => {
       return getProducts();
     },
   },
