@@ -9,10 +9,16 @@ const productCollections = {
   ] as Product[],
 };
 
-export const getProducts = (): Promise<Product[]> => {
-  return new Promise((resolve) => {
+const ITEM_COUNT = 10;
+export const getProducts = async (page: number): Promise<{products: Product[], page: number, totalCount: number}> => {
+  return await new Promise((resolve) => {
+    const startPage = (page - 1) * ITEM_COUNT;
     setTimeout(() => {
-      resolve(productCollections.products);
+      resolve({
+        products: productCollections.products.slice(startPage, startPage + ITEM_COUNT),
+        page,
+        totalCount: productCollections.products.length
+      });
     }, 1000);
   });
 };

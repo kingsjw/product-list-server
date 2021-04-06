@@ -15,8 +15,14 @@ export default gql`
     price: Int!
   }
 
-  type Query {
+  type ProductResp {
     products: [Product!]
+    page: Int
+    totalCount: Int
+  }
+
+  type Query {
+    productData(page: Int): ProductResp
   }
 
   type Mutation {
