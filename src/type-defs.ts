@@ -21,8 +21,13 @@ export default gql`
     totalCount: Int
   }
 
+  type ProductRecommendResp {
+    products: [Product!]
+  }
+
   type Query {
     productData(page: Int): ProductResp
+    productRecommendData: ProductRecommendResp
   }
 
   type Mutation {

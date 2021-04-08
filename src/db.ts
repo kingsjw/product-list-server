@@ -23,6 +23,24 @@ export const getProducts = async (page: number): Promise<{products: Product[], p
   });
 };
 
+export const getRecommendProducts = async (): Promise<{products: Product[]}> => {
+  const randomIndexList: Array<number> = [];
+  while (randomIndexList.length < 4) {
+    const randomIndex = Math.floor(Math.random() * productCollections.products.length);
+    if (randomIndexList.indexOf(randomIndex) === -1) {
+      randomIndexList.push(randomIndex);
+    }
+  }
+  const result = {
+    products: randomIndexList.map((index) => productCollections.products[index]),
+  };
+  return await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(result);
+    }, 1000);
+  });
+}
+
 export const getProductByID = (id: string): Product | undefined => {
   return productCollections.products.find((product) => product.id === id);
 };
