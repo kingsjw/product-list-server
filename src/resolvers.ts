@@ -1,5 +1,5 @@
-import { createProduct, getProducts, getRecommendProducts } from "./db";
-import { Product, ProductInput } from './models/product';
+import { addcart, getProducts, getRecommendProducts } from "./db";
+import { Product } from './models/product';
 
 export default {
   Query: {
@@ -11,8 +11,8 @@ export default {
     },
   },
   Mutation: {
-    addProduct: (_parent: unknown, args: { product: ProductInput }): Product => {
-      return createProduct(args.product);
+    addCart: (_parent: unknown, args: { productId: string }): {} => {
+      return addcart(args.productId);
     },
   },
 };

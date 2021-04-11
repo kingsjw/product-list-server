@@ -1,5 +1,4 @@
-import { Product, ProductInput } from './models/product';
-import { generateRandomID } from './utils/generateRandomID';
+import { Product } from './models/product';
 
 const productDummyData = require('./dummyData.json');
 
@@ -7,6 +6,7 @@ const productCollections = {
   products: [
     ...productDummyData.data
   ] as Product[],
+  cart: [] as string[],
 };
 
 const ITEM_COUNT = 10;
@@ -45,11 +45,19 @@ export const getProductByID = (id: string): Product | undefined => {
   return productCollections.products.find((product) => product.id === id);
 };
 
-export const createProduct = (product: ProductInput): Product => {
-  const newProduct = {
-    ...product,
-    id: generateRandomID("product_"),
+export const addcart = (productId: string): {} => {
+  const status = {
+    code: '',
   };
-  productCollections.products.push(newProduct);
-  return newProduct;
+  try {
+    productCollections.cart.push(productId);
+    status.code = 'success';
+  } catch {
+    status.code = 'error';
+  }
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(status)
+    }, 1000)
+  });
 };

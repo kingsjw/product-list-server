@@ -8,13 +8,6 @@ export default gql`
     price: Int!
   }
 
-  input ProductInput {
-    id: ID!
-    title: String!
-    coverImage: String!
-    price: Int!
-  }
-
   type ProductResp {
     products: [Product!]
     page: Int
@@ -25,12 +18,16 @@ export default gql`
     products: [Product!]
   }
 
+  type Status {
+    code: String!
+  }
+
   type Query {
     productData(page: Int): ProductResp
     productRecommendData: ProductRecommendResp
   }
 
   type Mutation {
-    addProduct(product: ProductInput): Product
+    addCart(productId: String): Status
   }
 `;
