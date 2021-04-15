@@ -16,7 +16,6 @@ export const getProducts = async (page: number): Promise<{products: Product[], p
     setTimeout(() => {
       const productList = productCollections.products.slice(startPage, startPage + ITEM_COUNT)
       .map(({ id, ...left }) => ({ id, ...left, liked: productCollections.likedList.indexOf(id) !== -1 }));
-      console.log(productList);
       resolve({
         products: productList,
         page,
