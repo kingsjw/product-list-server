@@ -6,6 +6,7 @@ export default gql`
     title: String!
     coverImage: String!
     price: Int!
+    liked: Boolean!
   }
 
   type ProductResp {
@@ -28,6 +29,6 @@ export default gql`
   }
 
   type Mutation {
-    addCart(productId: String): Status
+    likePost(productId: String): Status
   }
 `;

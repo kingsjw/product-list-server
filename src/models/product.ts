@@ -1,7 +1,8 @@
 export interface Product {
-  id: String
-  title: String
-  coverImage: String
-  price: Number
+  id: string
+  title: string
+  coverImage: string
+  price: number
+  liked?: boolean
 };
 

@@ -6,16 +6,19 @@ const productCollections = {
   products: [
     ...productDummyData.data
   ] as Product[],
-  cart: [] as string[],
+  likedList: [] as string[],
 };
 
-const ITEM_COUNT = 10;
 export const getProducts = async (page: number): Promise<{products: Product[], page: number, totalCount: number}> => {
+  const ITEM_COUNT = 10;
   return await new Promise((resolve) => {
     const startPage = (page - 1) * ITEM_COUNT;
     setTimeout(() => {
+      const productList = productCollections.products.slice(startPage, startPage + ITEM_COUNT)
+      .map(({ id, ...left }) => ({ id, ...left, liked: productCollections.likedList.indexOf(id) !== -1 }));
+      console.log(productList);
       resolve({
-        products: productCollections.products.slice(startPage, startPage + ITEM_COUNT),
+        products: productList,
         page,
         totalCount: productCollections.products.length
       });
@@ -45,19 +48,19 @@ export const getProductByID = (id: string): Product | undefined => {
   return productCollections.products.find((product) => product.id === id);
 };
 
-export const addcart = (productId: string): {} => {
+export const likePost = (productId: string): {} => {
   const status = {
     code: '',
   };
   try {
-    productCollections.cart.push(productId);
+    productCollections.likedList.push(productId);
     status.code = 'success';
   } catch {
     status.code = 'error';
   }
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(status)
+      resolve(status);
     }, 1000)
   });
 };

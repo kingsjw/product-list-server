@@ -1,4 +1,4 @@
-import { addcart, getProducts, getRecommendProducts } from "./db";
+import { likePost, getProducts, getRecommendProducts } from "./db";
 import { Product } from './models/product';
 
 export default {
@@ -11,8 +11,8 @@ export default {
     },
   },
   Mutation: {
-    addCart: (_parent: unknown, args: { productId: string }): {} => {
-      return addcart(args.productId);
+    likePost: (_parent: unknown, args: { productId: string }): {} => {
+      return likePost(args.productId);
     },
   },
 };
