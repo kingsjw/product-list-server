@@ -19,8 +19,8 @@ export default gql`
     products: [Product!]
   }
 
-  type Status {
-    code: String!
+  type LikedResp {
+    liked: Boolean
   }
 
   type Query {
@@ -29,6 +29,6 @@ export default gql`
   }
 
   type Mutation {
-    likePost(productId: String): Status
+    likePost(productId: String): LikedResp
   }
 `;

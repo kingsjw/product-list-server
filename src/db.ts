@@ -34,32 +34,32 @@ export const getRecommendProducts = async (): Promise<{products: Product[]}> => 
     }
   }
   const result = {
-    products: randomIndexList.map((index) => productCollections.products[index]),
+    products: randomIndexList
+    .map((index) => productCollections.products[index])
+    .map(({ id, ...left }) => ({ id, ...left, liked: productCollections.likedList.indexOf(id) !== -1 })),
   };
   return await new Promise((resolve) => {
     setTimeout(() => {
       resolve(result);
     }, 1000);
   });
-}
+};
 
 export const getProductByID = (id: string): Product | undefined => {
   return productCollections.products.find((product) => product.id === id);
 };
 
-export const likePost = (productId: string): {} => {
-  const status = {
-    code: '',
-  };
+export const likePost = (productId: string): Promise<{}> => {
+  let isLiked = false;
   try {
     productCollections.likedList.push(productId);
-    status.code = 'success';
+    isLiked = true;
   } catch {
-    status.code = 'error';
+    isLiked = false;
   }
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(status);
+      resolve({ liked: isLiked });
     }, 1000)
   });
 };

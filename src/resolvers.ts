@@ -11,7 +11,7 @@ export default {
     },
   },
   Mutation: {
-    likePost: (_parent: unknown, args: { productId: string }): {} => {
+    likePost: (_parent: unknown, args: { productId: string }): Promise<{}> => {
       return likePost(args.productId);
     },
   },
