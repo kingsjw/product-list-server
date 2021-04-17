@@ -9,14 +9,6 @@ export default gql`
     liked: Boolean!
   }
 
-  type ProductRecommend {
-    id: ID!
-    title: String!
-    coverImage: String!
-    price: Int!
-    liked: Boolean!
-  }
-
   type ProductResp {
     products: [Product!]
     page: Int
@@ -24,7 +16,7 @@ export default gql`
   }
 
   type ProductRecommendResp {
-    products: [ProductRecommend!]
+    products: [Product!]
   }
 
   type LikedResp {
