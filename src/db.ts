@@ -49,17 +49,28 @@ export const getProductByID = (id: string): Product | undefined => {
   return productCollections.products.find((product) => product.id === id);
 };
 
-export const likePost = (productId: string): Promise<{}> => {
-  let isLiked = false;
-  try {
+export const setLikeProduct = (productId: string): Promise<{}> => {
+  const index = productCollections.likedList.indexOf(productId);
+  if (index !== -1) {
+    productCollections.likedList.splice(index, 1);
+  } else {
     productCollections.likedList.push(productId);
-    isLiked = true;
-  } catch {
-    isLiked = false;
   }
+  console.log(productCollections.likedList);
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ liked: isLiked });
+      resolve({ status: 'success' });
     }, 1000)
+  });
+};
+
+export const getLikedProducts = (): Promise<{ status: string, likedList: string[] }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        status: 'success',
+        likedList: productCollections.likedList,
+      });
+    }, 1000);
   });
 };

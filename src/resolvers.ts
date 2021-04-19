@@ -1,18 +1,21 @@
-import { likePost, getProducts, getRecommendProducts } from "./db";
+import { getLikedProducts, setLikeProduct, getProducts, getRecommendProducts } from "./db";
 import { Product } from './models/product';
 
 export default {
   Query: {
-    productData: async (_: any, { page }: { page: number }): Promise<{products: Product[], page: number, totalCount: number}> => {
-      return await getProducts(page);
+    productData: (_: any, { page }: { page: number }): Promise<{products: Product[], page: number, totalCount: number}> => {
+      return getProducts(page);
     },
-    productRecommendData: async (): Promise<{products: Product[]}> => {
-      return await getRecommendProducts();
+    productRecommendData: (): Promise<{products: Product[]}> => {
+      return getRecommendProducts();
+    },
+    likedProducts: (): Promise<{ status: string, likedList: string[] }> => {
+      return getLikedProducts();
     },
   },
   Mutation: {
-    likePost: (_parent: unknown, args: { productId: string }): Promise<{}> => {
-      return likePost(args.productId);
+    setLikeProduct: (_parent: unknown, args: { productId: string }): Promise<{}> => {
+      return setLikeProduct(args.productId);
     },
   },
 };

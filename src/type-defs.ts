@@ -19,16 +19,22 @@ export default gql`
     products: [Product!]
   }
 
-  type LikedResp {
-    liked: Boolean
+  type getLikedListResp {
+    status: String
+    likedList: [String!]
+  }
+
+  type setLikeProductResp {
+    status: String
   }
 
   type Query {
     productData(page: Int): ProductResp
     productRecommendData: ProductRecommendResp
+    likedProducts: getLikedListResp
   }
 
   type Mutation {
-    likePost(productId: String): LikedResp
+    setLikeProduct(productId: String): setLikeProductResp
   }
 `;
