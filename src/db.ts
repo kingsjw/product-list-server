@@ -56,7 +56,6 @@ export const setLikeProduct = (productId: string): Promise<{}> => {
   } else {
     productCollections.likedList.push(productId);
   }
-  console.log(productCollections.likedList);
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ status: 'success' });
