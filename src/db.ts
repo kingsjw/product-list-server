@@ -6,7 +6,6 @@ const productCollections = {
   products: [
     ...productDummyData.data
   ] as Product[],
-  likedList: [] as string[],
 };
 
 export const getProducts = async (page: number): Promise<{products: Product[], page: number, totalCount: number}> => {
@@ -14,8 +13,7 @@ export const getProducts = async (page: number): Promise<{products: Product[], p
   return await new Promise((resolve) => {
     const startPage = (page - 1) * ITEM_COUNT;
     setTimeout(() => {
-      const productList = productCollections.products.slice(startPage, startPage + ITEM_COUNT)
-      .map(({ id, ...left }) => ({ id, ...left, liked: productCollections.likedList.indexOf(id) !== -1 }));
+      const productList = productCollections.products.slice(startPage, startPage + ITEM_COUNT);
       resolve({
         products: productList,
         page,
@@ -35,8 +33,7 @@ export const getRecommendProducts = async (): Promise<{products: Product[]}> => 
   }
   const result = {
     products: randomIndexList
-    .map((index) => productCollections.products[index])
-    .map(({ id, ...left }) => ({ id, ...left, liked: productCollections.likedList.indexOf(id) !== -1 })),
+    .map((index) => productCollections.products[index]),
   };
   return await new Promise((resolve) => {
     setTimeout(() => {
@@ -49,27 +46,16 @@ export const getProductByID = (id: string): Product | undefined => {
   return productCollections.products.find((product) => product.id === id);
 };
 
-export const setLikeProduct = (productId: string): Promise<{}> => {
-  const index = productCollections.likedList.indexOf(productId);
-  if (index !== -1) {
-    productCollections.likedList.splice(index, 1);
-  } else {
-    productCollections.likedList.push(productId);
-  }
+export const setLikeProduct = (productId: string): Promise<{product: Product}> => {
+  const selectedProduct = productCollections.products.find(({ id }) => productId === id);
+  const product = {
+    ...selectedProduct,
+    liked: !selectedProduct.liked,
+  };
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ status: 'success' });
+      resolve({ product });
     }, 1000)
   });
 };
 
-export const getLikedProducts = (): Promise<{ status: string, likedList: string[] }> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        status: 'success',
-        likedList: productCollections.likedList,
-      });
-    }, 1000);
-  });
-};

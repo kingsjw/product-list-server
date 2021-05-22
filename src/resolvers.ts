@@ -1,4 +1,4 @@
-import { getLikedProducts, setLikeProduct, getProducts, getRecommendProducts } from "./db";
+import { setLikeProduct, getProducts, getRecommendProducts } from "./db";
 import { Product } from './models/product';
 
 export default {
@@ -9,12 +9,9 @@ export default {
     productRecommendData: (): Promise<{products: Product[]}> => {
       return getRecommendProducts();
     },
-    likedProducts: (): Promise<{ status: string, likedList: string[] }> => {
-      return getLikedProducts();
-    },
   },
   Mutation: {
-    setLikeProduct: (_parent: unknown, args: { productId: string }): Promise<{}> => {
+    setLikeProduct: (_parent: unknown, args: { productId: string }): Promise<{product: Product}> => {
       return setLikeProduct(args.productId);
     },
   },
